@@ -1,57 +1,62 @@
 #include "search_algos.h"
+/**
+* print_arr - prints array
+* @array: array
+* @begin: beginning
+* @end: end
+* Return: void
+**/
+void print_arr(int *array, size_t begin, size_t end)
+{
+
+	unsigned int m;
+
+	printf("Searching in array: ");
+	for (m = begin; m < end; m++)
+	{
+		printf("%d, ", array[m]);
+	}
+	printf("%d\n", array[end]);
+}
 
 /**
- * binary_search - binary search implementation
- * @array: string
- * @size: size_t
- * @value: value
- * Return: int, index of the value
+ * binary_search - searches for a value in a sorted array of integers using
+ * the binary search algorithm
+ * @array: pointer to the first element of the array
+ * @size: number of elements
+ * @value: value to search for
+ * Return: index where value is located
  */
-
 int binary_search(int *array, size_t size, int value)
 {
-size_t i;
-int left = 0;
-int right = size;
-int middle;
-if (array == NULL)
-	return (-1);
+	unsigned int left = 0;
+	unsigned int right;
+	int middle;
 
-for (i = 0; left < right; i++)
-{
-	printf("Searching in array: ");
-	print_array(array, left, right);
-	middle = (left + right) / 2;
+	right = size - 1;
 
-	if (array[middle] < value)
-		left = middle + 1;
-	else if (array[middle] > value)
-		right = middle;
-	else
-		return (middle);
-}
-return (-1);
-}
-
-
-/**
- * print_array - print `n` elements of an array of integers
- * @a: int array pointer to print
- * @i: int, start index
- * @j: int, end index
- * Description: Numbers must be separated by comma and space.
- * Numbers should be displayed in the same order they are stored in array.
- * You can only use _putchar to print.
- */
-
-void print_array(int *a, int i, int j)
-{
-
-	for (; i < j; i++)
+	if (array == NULL)
+		return (-1);
+	if (size == 1)
 	{
-		printf("%d", a[i]);
-		if (i < j - 1)
-			printf(", ");
+		return (array[left]);
 	}
-	printf("\n");
+	while (right >= left)
+	{
+		if (left == 0 && right == 0)
+			return (-1);
+		print_arr(array, left, right);
+		middle = (right + left) / 2;
+		if (array[middle] == value)
+			return (array[middle]);
+		else if (array[middle] < value)
+		{
+			left = middle + 1;
+		}
+		else if (array[middle] > value)
+		{
+			right = middle;
+		}
+	}
+	return (-1);
 }
